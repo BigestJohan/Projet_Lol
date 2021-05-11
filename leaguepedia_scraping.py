@@ -31,14 +31,15 @@ if __name__ == "__main__":
     # Using mwclient to connect to the Leaguepedia API
     site = mwclient.Site('lol.fandom.com', path='/')
     continuer=True
-    date="2000-01-01 00:00:00"
+    date="2000-01-01 00:00:00" 
     stocklongueur=500
     # Creating a where clause for my specific patches
     while(continuer):
         sleep(2)
 
-        where_clause="SG.DateTime_UTC >= '"+date+"'"
+        where_clause="SG.DateTime_UTC >= '"+date+"'" #Version sans patch
 
+        #A décommenter si on veut choisir les patchs
         """where_clause = "SG.DateTime_UTC >= '"+date+"' AND ("
         for i in range(len(PATCH_LIST)):
             where_clause += f'SG.Patch="{PATCH_LIST[i]}"' if i==len(PATCH_LIST)-1 else f'SG.Patch="{PATCH_LIST[i]}" OR '
@@ -61,11 +62,11 @@ if __name__ == "__main__":
         
         # Printing teams, patch and match history link for every game
 
-        connection=create_connection(host_name,user_name,user_password,database_name,host_port)
+        connection=create_connection(host_name,user_name,user_password,database_name,host_port) #Connect to BDD
 
         for row in json_data['cargoquery']:
             try:
-                addGame(connection,row)
+                addGame(connection,row) #Add game to BDD
             except:
                 print("Error")
         longueur=len(json_data['cargoquery'])
