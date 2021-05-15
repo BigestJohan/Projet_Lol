@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # Using mwclient to connect to the Leaguepedia API
     site = mwclient.Site('lol.fandom.com', path='/')
     continuer=True
-    date="2000-01-01 00:00:00" 
+    date="2021-04-01 00:00:00" 
     stocklongueur=500
     # Creating a where clause for my specific patches
     while(continuer):
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         response = site.api('cargoquery', 
             limit = 'max',
             tables = "ScoreboardGames=SG",
-            fields = "SG.Team1, SG.Team2, SG.Patch, SG.MatchHistory, SG.DateTime_UTC",
+            fields = "SG.Team1, SG.Team2, SG.Patch, SG.MatchHistory, SG.DateTime_UTC, SG.Tournament, SG.WinTeam",
             where = where_clause,
             order_by="SG.DateTime_UTC"
         )
@@ -66,6 +66,7 @@ if __name__ == "__main__":
 
         for row in json_data['cargoquery']:
             try:
+                #print(row)
                 addGame(connection,row) #Add game to BDD
             except:
                 print("Error")
